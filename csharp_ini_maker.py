@@ -50,9 +50,7 @@ def cli():
                         required=True,
                         help='Specify name for output INI file')
 
-    args = parser.parse_args()
-
-    return args
+    return parser.parse_args()
 
 def gather(args):
 

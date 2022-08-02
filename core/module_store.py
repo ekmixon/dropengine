@@ -1,11 +1,8 @@
 class ModuleStore():
 
     def __init__(self, modules=[]):
-    
-        self.modules = {}
-        for m in modules:
-            self.modules[m.name] = m
 
+        self.modules = {m.name: m for m in modules}
         self.index = 0
 
     def __iter__(self):

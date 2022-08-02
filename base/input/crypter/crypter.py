@@ -24,7 +24,7 @@ class Crypter(InputModule):
 
         if not hasattr(self, 'encrypt'):
             raise Exception('Crypter modules requires method: self.encrypt')
-        
+
         super().validate()
 
     def encrypt(self):

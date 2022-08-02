@@ -12,7 +12,7 @@ class Imports(OutputModule):
 
     def add(self, imports):
 
-        if type(imports) == set or type(imports) == list:
+        if type(imports) in [set, list]:
 
             for i in imports:
                 self.imports.add(i)
@@ -22,7 +22,7 @@ class Imports(OutputModule):
             self.imports.add(imports)
 
         else:
-            raise ValueError('Invalid parameter type'+str(imports))
+            raise ValueError(f'Invalid parameter type{str(imports)}')
 
     def render(self):
         env = Environment(loader=FileSystemLoader('templates'))

@@ -60,14 +60,9 @@ class MEKey(EKey):
 
         assert self.args.http_otk_lhost is not None
         assert self.args.http_otk_protocol is not None
-    
+
         if self.args.http_otk_lport is None:
-
-            if self.args.http_otk_protocol == 'http':
-                self.args.http_otk_lport = 80
-            else:
-                self.args.http_otk_lport = 443
-
+            self.args.http_otk_lport = 80 if self.args.http_otk_protocol == 'http' else 443
         ekey_val = core.helpers.crypto.random_key(length=32)
         self.ekey_val = ekey_val
 

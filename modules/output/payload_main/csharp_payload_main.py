@@ -4,7 +4,7 @@ from base.output.payload_main.payload_main import PayloadMain
 class CSharpPayloadMain(PayloadMain, CSharpOutputModule):
 
     def __init__(self):
-        
+
         super().__init__()
 
         self.name = 'csharp_payload_main'

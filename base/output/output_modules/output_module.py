@@ -18,7 +18,7 @@ class OutputModule(HasCLI, DEComponent):
 
         if config.debug:
             print('calling OutputModule.__init__()')
-        
+
         self.function_mappings = {}
         self.var_mappings = {}
         self.comment_mappings = {}

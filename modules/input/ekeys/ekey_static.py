@@ -52,13 +52,12 @@ class MEKey(EKey):
 
     def generate(self):
 
-        if self.args.ekey_value is not None:
-            if self.args.ekey_b64:
-                ekey_val = self.args.ekey_val
-            else:
-                ekey_val = base64.b64decode(self.args.ekey_val)
-        else:
+        if self.args.ekey_value is None:
             ekey_val = core.helpers.crypto.random_key(length=self.args.ekey_len)
+        elif self.args.ekey_b64:
+            ekey_val = self.args.ekey_val
+        else:
+            ekey_val = base64.b64decode(self.args.ekey_val)
         self.ekey_val = ekey_val
         return {
             'val' : ekey_val,

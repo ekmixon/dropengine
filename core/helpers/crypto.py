@@ -13,8 +13,7 @@ GLOBAL_KEYSPACE = ''.join([
 def rot13(pt):
 
     encoder = getencoder('rot-13')
-    ct = encoder(pt)[0]
-    return ct
+    return encoder(pt)[0]
 
 
 def random_string(keyspace=None, length=None, min_len=8, max_len=16, exclude=[]):
@@ -56,15 +55,15 @@ def print_ciphertext(ct):
 
     print('{\n    0x', end='')
     split_chars = ct.hex(' ').split()
-    for i,c in enumerate(split_chars[:len(split_chars)-1]):
+    for i,c in enumerate(split_chars[:-1]):
 
         if i % 10 == 9:
-            print('{},\n    0x'.format(c), end='')
+            print(f'{c},\n    0x', end='')
         else:
-            print('{}, 0x'.format(c), end='')
+            print(f'{c}, 0x', end='')
     if (i+1) % 10 == 9:
-        print('{}'.format(split_chars[i+1]))
+        print(f'{split_chars[i+1]}')
     else:
-        print('{}'.format(split_chars[i+1]), end='')
+        print(f'{split_chars[i+1]}', end='')
 
     print('};')

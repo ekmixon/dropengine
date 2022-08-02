@@ -1503,21 +1503,23 @@ class CSharpLexer(Lexer):
 
     def action(self, localctx:RuleContext, ruleIndex:int, actionIndex:int):
         if self._actions is None:
-            actions = dict()
-            actions[122] = self.INTERPOLATED_REGULAR_STRING_START_action 
-            actions[123] = self.INTERPOLATED_VERBATIUM_STRING_START_action 
-            actions[124] = self.OPEN_BRACE_action 
-            actions[125] = self.CLOSE_BRACE_action 
-            actions[132] = self.COLON_action 
-            actions[172] = self.OPEN_BRACE_INSIDE_action 
-            actions[175] = self.DOUBLE_QUOTE_INSIDE_action 
-            actions[179] = self.CLOSE_BRACE_INSIDE_action 
+            actions = {
+                122: self.INTERPOLATED_REGULAR_STRING_START_action,
+                123: self.INTERPOLATED_VERBATIUM_STRING_START_action,
+                124: self.OPEN_BRACE_action,
+                125: self.CLOSE_BRACE_action,
+                132: self.COLON_action,
+                172: self.OPEN_BRACE_INSIDE_action,
+                175: self.DOUBLE_QUOTE_INSIDE_action,
+                179: self.CLOSE_BRACE_INSIDE_action,
+            }
+
             self._actions = actions
         action = self._actions.get(ruleIndex, None)
         if action is not None:
             action(localctx, actionIndex)
         else:
-            raise Exception("No registered action for:" + str(ruleIndex))
+            raise Exception(f"No registered action for:{ruleIndex}")
 
 
     def INTERPOLATED_REGULAR_STRING_START_action(self, localctx:RuleContext , actionIndex:int):
@@ -1531,76 +1533,56 @@ class CSharpLexer(Lexer):
      
 
     def OPEN_BRACE_action(self, localctx:RuleContext , actionIndex:int):
-        if actionIndex == 2:
-
-            #if (self.interpolatedStringLevel > 0)
-            #{
-            #    curlyLevels.push(curlyLevels.pop() + 1);
-            #}
-            if self.interpolatedStringLevel > 0:
-                self.curlyLevels.append(curlyLevels.pop() + 1)
+        if actionIndex == 2 and self.interpolatedStringLevel > 0:
+            self.curlyLevels.append(curlyLevels.pop() + 1)
      
 
     def CLOSE_BRACE_action(self, localctx:RuleContext , actionIndex:int):
-        if actionIndex == 3:
+        if actionIndex == 3 and self.interpolatedStringLevel > 0:
+            self.curlyLevels.append(curlyLevels.pop() - 1)
+            if curlyLevels[-1] == 0:
 
-            #if (self.interpolatedStringLevel > 0)
-            #{
-            #    curlyLevels.push(curlyLevels.pop() - 1);
-            #    if (curlyLevels.peek() == 0)
-            #    {
-            #        curlyLevels.pop();
-            #        skip();
-            #        popMode();
-            #    }
-            #}
-
-            if self.interpolatedStringLevel > 0:
-
-                self.curlyLevels.append(curlyLevels.pop() - 1)
-                if curlyLevels[-1] == 0:
-
-                    self.curlyLevels.pop()
-                    self.skip();
-                    self.popMode();
+                self.curlyLevels.pop()
+                self.skip();
+                self.popMode();
 
 
      
 
     def COLON_action(self, localctx:RuleContext , actionIndex:int):
-        if actionIndex == 4:
+        if actionIndex != 4:
+            return
+        #if (self.interpolatedStringLevel > 0)
+        #{
+        #    int ind = 1;
+        #    boolean switchToFormatString = true;
+        #    while ((char)_input.LA(ind) != '}')
+        #    {
+        #        if (_input.LA(ind) == ':' || _input.LA(ind) == ')')
+        #        {
+        #            switchToFormatString = false;
+        #            break;
+        #        }
+        #        ind++;
+        #    }
+        #    if (switchToFormatString)
+        #    {
+        #        mode(INTERPOLATION_FORMAT);
+        #    }
+        #}
 
-            #if (self.interpolatedStringLevel > 0)
-            #{
-            #    int ind = 1;
-            #    boolean switchToFormatString = true;
-            #    while ((char)_input.LA(ind) != '}')
-            #    {
-            #        if (_input.LA(ind) == ':' || _input.LA(ind) == ')')
-            #        {
-            #            switchToFormatString = false;
-            #            break;
-            #        }
-            #        ind++;
-            #    }
-            #    if (switchToFormatString)
-            #    {
-            #        mode(INTERPOLATION_FORMAT);
-            #    }
-            #}
+        if self.interpolatedStringLevel > 0:
 
-            if self.interpolatedStringLevel > 0:
+            ind: int = 1
+            switchToFormatString: bool = True
+            while (_input.LA(ind) != '}'):
+                if _input.LA(ind) != '}' or _input.LA(ind) == ')':
+                    switchToFormatString = False
+                    break
+                ind += 1
 
-                ind: int = 1
-                switchToFormatString: bool = True
-                while (_input.LA(ind) != '}'):
-                    if _input.LA(ind) != '}' or _input.LA(ind) == ')':
-                        switchToFormatString = False
-                        break
-                    ind += 1
-
-                if switchToFormatString:
-                    mode(INTERPOLATION_FORMAT)
+            if switchToFormatString:
+                mode(INTERPOLATION_FORMAT)
 
     def OPEN_BRACE_INSIDE_action(self, localctx:RuleContext , actionIndex:int):
         if actionIndex == 5:
@@ -1624,17 +1606,19 @@ class CSharpLexer(Lexer):
 
     def sempred(self, localctx:RuleContext, ruleIndex:int, predIndex:int):
         if self._predicates is None:
-            preds = dict()
-            preds[173] = self.REGULAR_CHAR_INSIDE_sempred
-            preds[174] = self.VERBATIUM_DOUBLE_QUOTE_INSIDE_sempred
-            preds[176] = self.REGULAR_STRING_INSIDE_sempred
-            preds[177] = self.VERBATIUM_INSIDE_STRING_sempred
+            preds = {
+                173: self.REGULAR_CHAR_INSIDE_sempred,
+                174: self.VERBATIUM_DOUBLE_QUOTE_INSIDE_sempred,
+                176: self.REGULAR_STRING_INSIDE_sempred,
+                177: self.VERBATIUM_INSIDE_STRING_sempred,
+            }
+
             self._predicates = preds
         pred = self._predicates.get(ruleIndex, None)
         if pred is not None:
             return pred(localctx, predIndex)
         else:
-            raise Exception("No registered predicate for:" + str(ruleIndex))
+            raise Exception(f"No registered predicate for:{ruleIndex}")
 
     def REGULAR_CHAR_INSIDE_sempred(self, localctx:RuleContext, predIndex:int):
             if predIndex == 0:

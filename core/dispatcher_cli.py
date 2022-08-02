@@ -229,7 +229,7 @@ class Dispatcher:
 
             sys.exit()
 
-    
+
 
         if self.master_args.list is not None:
 
@@ -284,7 +284,7 @@ class Dispatcher:
 
                     mod = self.executors[self.master_args.executor]
                     self.list_compatible(mod)
-            
+
                 if self.master_args.crypter is not None:
 
                     mod = self.crypters[self.master_args.crypter]
@@ -324,8 +324,6 @@ class Dispatcher:
                     for dkey in self.master_args.dkeys:
                         mod = self.dkeys[dkey]
                         self.list_compatible(mod)
-
-                sys.exit()
 
             else:
                 print()
@@ -393,9 +391,8 @@ class Dispatcher:
                     for _ in self.postmodules:
                         print(f'    {_.name}')
                     print()
-                sys.exit()
+            sys.exit()
 
-        #elif self.at_least_one_module_type_is_selected(self.master_args):
         elif self.master_args.build:
 
             #if self.master_args.ekey is not None:
@@ -421,7 +418,7 @@ class Dispatcher:
                 self.dispatch['executor'] = self.executors[self.master_args.executor]
                 unknown = self.executors[self.master_args.executor].parse_args(unknown)
                 self.options['executor'] = self.executors[self.master_args.executor].get_options()
-        
+
             if self.master_args.crypter is not None:
 
                 self.dispatch['crypter'] = self.crypters[self.master_args.crypter]
@@ -617,9 +614,7 @@ class Dispatcher:
 
     @staticmethod
     def get_choices(path, mtype):
-        return [
-            c for c in Loader(paths=[path], mtype=mtype).get_loadables().modules
-        ]
+        return list(Loader(paths=[path], mtype=mtype).get_loadables().modules)
 
     @staticmethod
     def add_arguments(parser):

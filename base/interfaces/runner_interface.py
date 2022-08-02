@@ -19,7 +19,7 @@ class RunnerInterface(DEComponent):
 
         self.key_transfer_interface = []
         self.key_parts = []
-        
+
         super().__init__()
 
     def initialize(self, dispatch, options):
@@ -114,7 +114,7 @@ class RunnerInterface(DEComponent):
         executor_func = self.dispatch['executor'].func_name
         runner_func_name = self.dispatch['runner'].func_name
         payload_main_func_name = self.payload_main.func_name
-        
+
 
         # set dkey specials
         #self.dispatch['dkey'].special['ekey_data'] = self.ekey_data
@@ -160,7 +160,7 @@ class RunnerInterface(DEComponent):
 
     def render(self):
 
-        
+
         rendered_imports = self.imports.render()
 
         #print(self.inner_shell.rendered_decrypter)
@@ -181,11 +181,9 @@ class RunnerInterface(DEComponent):
             self.inner_shell.rendered_post_modules.append(post.render())
 
         rendered_inner_shell = self.inner_shell.render()
-            
+
 
         self.dispatch['runner'].rendered_inner_shell = rendered_inner_shell
         self.dispatch['runner'].rendered_imports = rendered_imports
-    
-        rendered_runner = self.dispatch['runner'].render()
 
-        return rendered_runner
+        return self.dispatch['runner'].render()

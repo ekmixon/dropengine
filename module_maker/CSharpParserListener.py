@@ -35,7 +35,6 @@ class CSharpParserListener(ParseTreeListener):
     def enterNamespace_or_type_name(self, ctx:CSharpParser.Namespace_or_type_nameContext):
         with open('namespaces-or-type-names.txt', 'a') as fd:
             fd.write(ctx.getText()+'\n')
-        pass
 
     # Exit a parse tree produced by CSharpParser#namespace_or_type_name.
     def exitNamespace_or_type_name(self, ctx:CSharpParser.Namespace_or_type_nameContext):
@@ -46,7 +45,6 @@ class CSharpParserListener(ParseTreeListener):
     def enterType_(self, ctx:CSharpParser.Type_Context):
         with open('types.txt', 'a') as fd:
             fd.write(ctx.getText()+'\n')
-        pass
 
     # Exit a parse tree produced by CSharpParser#type_.
     def exitType_(self, ctx:CSharpParser.Type_Context):
@@ -57,7 +55,6 @@ class CSharpParserListener(ParseTreeListener):
     def enterBase_type(self, ctx:CSharpParser.Base_typeContext):
         with open('base-types.txt', 'a') as fd:
             fd.write(ctx.getText()+'\n')
-        pass
 
     # Exit a parse tree produced by CSharpParser#base_type.
     def exitBase_type(self, ctx:CSharpParser.Base_typeContext):
@@ -122,7 +119,6 @@ class CSharpParserListener(ParseTreeListener):
     def enterClass_type(self, ctx:CSharpParser.Class_typeContext):
         with open('class-types.txt', 'a') as fd:
             fd.write(ctx.getText()+'\n')
-        pass
 
     # Exit a parse tree produced by CSharpParser#class_type.
     def exitClass_type(self, ctx:CSharpParser.Class_typeContext):
@@ -142,7 +138,6 @@ class CSharpParserListener(ParseTreeListener):
     def enterArgument_list(self, ctx:CSharpParser.Argument_listContext):
         with open('arg-lists.txt', 'a') as fd:
             fd.write(ctx.getText()+'\n')
-        pass
 
     # Exit a parse tree produced by CSharpParser#argument_list.
     def exitArgument_list(self, ctx:CSharpParser.Argument_listContext):
@@ -162,7 +157,6 @@ class CSharpParserListener(ParseTreeListener):
     def enterExpression(self, ctx:CSharpParser.ExpressionContext):
         with open('expressions.txt', 'a') as fd:
             fd.write(ctx.getText()+'\n')
-        pass
 
     # Exit a parse tree produced by CSharpParser#expression.
     def exitExpression(self, ctx:CSharpParser.ExpressionContext):
@@ -1155,7 +1149,6 @@ class CSharpParserListener(ParseTreeListener):
     def enterLocal_variable_declarator(self, ctx:CSharpParser.Local_variable_declaratorContext):
         #print(ctx.identifier().getText())
         self.vars.add(ctx.identifier().getText())
-        pass
 
     # Exit a parse tree produced by CSharpParser#local_variable_declarator.
     def exitLocal_variable_declarator(self, ctx:CSharpParser.Local_variable_declaratorContext):
@@ -2180,7 +2173,6 @@ class CSharpParserListener(ParseTreeListener):
     # Enter a parse tree produced by CSharpParser#class_definition.
     def enterClass_definition(self, ctx:CSharpParser.Class_definitionContext):
         self.class_decls.add(ctx.identifier().getText())
-        pass
 
     # Exit a parse tree produced by CSharpParser#class_definition.
     def exitClass_definition(self, ctx:CSharpParser.Class_definitionContext):
@@ -2225,8 +2217,6 @@ class CSharpParserListener(ParseTreeListener):
         ##print(ctx.getText())
 
         self.delegates.add(ctx.identifier().getText())
-        #print(dir(ctx))
-        pass
 
     # Exit a parse tree produced by CSharpParser#delegate_definition.
     def exitDelegate_definition(self, ctx:CSharpParser.Delegate_definitionContext):
@@ -2326,10 +2316,6 @@ class CSharpParserListener(ParseTreeListener):
                 #print(p.arg_declaration().getText())
                 #print(dir(p.arg_declaration()))
                 self.params.add(p.arg_declaration().identifier().getText())
-        #print()
-        #print()
-        #print()
-        pass
 
     # Exit a parse tree produced by CSharpParser#method_declaration.
     def exitMethod_declaration(self, ctx:CSharpParser.Method_declarationContext):
@@ -2340,7 +2326,6 @@ class CSharpParserListener(ParseTreeListener):
     def enterMethod_member_name(self, ctx:CSharpParser.Method_member_nameContext):
         with open('method-member-names.txt', 'a') as fd:
             fd.write(ctx.getText()+'\n')
-        pass
 
     # Exit a parse tree produced by CSharpParser#method_member_name.
     def exitMethod_member_name(self, ctx:CSharpParser.Method_member_nameContext):
@@ -2369,7 +2354,6 @@ class CSharpParserListener(ParseTreeListener):
     def enterMethod_invocation(self, ctx:CSharpParser.Method_invocationContext):
         with open('method-invocations.txt', 'a') as fd:
             fd.write(ctx.getText()+'\n')
-        pass
 
     # Exit a parse tree produced by CSharpParser#method_invocation.
     def exitMethod_invocation(self, ctx:CSharpParser.Method_invocationContext):
@@ -2390,7 +2374,6 @@ class CSharpParserListener(ParseTreeListener):
         #print(ctx.getText())
         with open('identifiers.txt', 'a') as fd:
             fd.write(ctx.getText()+'\n')
-        pass
         #print(dir(ctx))
         #print(ctx.getText())
         #print('yooo')

@@ -11,14 +11,14 @@ app = Flask(__name__)
 
 @app.route('/')
 def entry_point():
-    
+
     alt = random_string()
 
     implant_id = request.args.get('id', None)
 
     if args.debug:
         print('Implant id is', implant_id)
-    
+
     if implant_id is None:
         return alt
 
@@ -35,10 +35,7 @@ def entry_point():
     if args.debug:
         print('remote_key is', remote_key)
 
-    if remote_key is None:
-        return alt
-
-    return remote_key
+    return alt if remote_key is None else remote_key
 
 if __name__ == '__main__':
 

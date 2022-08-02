@@ -42,32 +42,17 @@ class Ciphertext():
 
         if self.pad_len is not None:
 
-            return_me.append('\n'.join([
-                'pad length',
-                '',
-                str(hex(self.pad_len)),
-                '',
-            ]))
+            return_me.append('\n'.join(['pad length', '', hex(self.pad_len), '']))
 
 
 
         if self.ct_len is not None:
 
-            return_me.append('\n'.join([
-                'ct length',
-                '',
-                str(hex(self.ct_len)),
-                '',
-            ]))
+            return_me.append('\n'.join(['ct length', '', hex(self.ct_len), '']))
 
         if self.ekey_len is not None:
 
-            return_me.append('\n'.join([
-                'ekey length',
-                '',
-                str(hex(self.ekey_len)),
-                '',
-            ]))
+            return_me.append('\n'.join(['ekey length', '', hex(self.ekey_len), '']))
 
         if self.iv is not None:
 

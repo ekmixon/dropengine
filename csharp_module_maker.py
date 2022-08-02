@@ -65,7 +65,7 @@ def cli():
 
     decrypter_imodule_choices = Dispatcher.get_choices('./modules/input/crypters', 'MCrypter')
     dkey_imodule_choices = Dispatcher.get_choices('./modules/input/ekeys', 'MEKey')
-    
+
     crypter_omodule_choices = Dispatcher.get_choices('./modules/output/decrypters', 'MDecrypter')
     ekey_omodule_choices = Dispatcher.get_choices('./modules/output/dkeys', 'MDKey')
 
@@ -178,10 +178,10 @@ def cli():
             if args.mcompatible_imodules != []:
 
                 print()
-                print(f'[!] The --compatible-imodules flag should is '
-                       'incompatible with module of type {args.mtype}. '
-                       'Please use the --compatible-omodules flag '
-                       'instead')
+                print(
+                    '[!] The --compatible-imodules flag should is incompatible with module of type {args.mtype}. Please use the --compatible-omodules flag instead'
+                )
+
                 print()
 
                 sys.exit(1)
@@ -218,7 +218,7 @@ def cli():
 
 
             args.mcompatible_xmodules = args.mcompatible_omodules
-            
+
 
         elif args.mtype in OMODULE_TYPES:
 
@@ -236,7 +236,7 @@ def cli():
             if args.mclass_name is None:
 
                 print()
-                print(f'[!] The --class-name flag must be used with all output modules.')
+                print('[!] The --class-name flag must be used with all output modules.')
                 print()
 
                 sys.exit(1)
@@ -244,7 +244,7 @@ def cli():
             if args.mfunc_name is None:
 
                 print()
-                print(f'[!] The --func-name flag must be used with all output modules.')
+                print('[!] The --func-name flag must be used with all output modules.')
                 print()
 
                 sys.exit(1)
@@ -311,79 +311,75 @@ def cli():
                 print()
                 display_xmodule_choices(interface_choices)
 
-                
-    # check to make sure module of name mname does not already exist
 
-    if not args.force:
+    if args.mtype == 'mutator':
+        if not args.force and args.mname in Dispatcher.get_choices(
+            './modules/mutators', 'MMutator'
+        ):
+            print(f'[!] Error: {args.mtype} module of name {args.mname} already exists')
+            sys.exit(1)
 
-        if args.mtype == 'mutator':
+    elif args.mtype == 'decrypter':
+        if not args.force and args.mname in Dispatcher.get_choices(
+            './modules/output/decrypters', 'MDecrypter'
+        ):
+            print(f'[!] Error: {args.mtype} module of name {args.mname} already exists')
+            sys.exit(1)
 
-            if args.mname in Dispatcher.get_choices('./modules/mutators', 'MMutator'):
+    elif args.mtype == 'dkey':
+        if not args.force and args.mname in Dispatcher.get_choices(
+            './modules/output/dkeys', 'MDKey'
+        ):
+            print(f'[!] Error: {args.mtype} module of name {args.mname} already exists')
+            sys.exit(1)
 
-                print(f'[!] Error: {args.mtype} module of name {args.mname} already exists')
-                sys.exit(1)
-
-        elif args.mtype == 'decrypter':
-
-            if args.mname in Dispatcher.get_choices('./modules/output/decrypters', 'MDecrypter'):
-
-                print(f'[!] Error: {args.mtype} module of name {args.mname} already exists')
-                sys.exit(1)
-
-        elif args.mtype == 'dkey':
-
-            if args.mname in Dispatcher.get_choices('./modules/output/dkeys', 'MDKey'):
-
-                print(f'[!] Error: {args.mtype} module of name {args.mname} already exists')
-                sys.exit(1)
-
-        elif args.mtype == 'executor':
-
-            if args.mname in Dispatcher.get_choices('./modules/output/executors', 'MExecutor'):
-
-                print(f'[!] Error: {args.mtype} module of name {args.mname} already exists')
-                sys.exit(1)
+    elif args.mtype == 'executor':
+        if not args.force and args.mname in Dispatcher.get_choices(
+            './modules/output/executors', 'MExecutor'
+        ):
+            print(f'[!] Error: {args.mtype} module of name {args.mname} already exists')
+            sys.exit(1)
 
 
-        elif args.mtype == 'postmodules':
+    elif args.mtype == 'postmodules':
+        if not args.force and args.mname in Dispatcher.get_choices(
+            './modules/output/postmodules', 'MPostModule'
+        ):
+            print(f'[!] Error: {args.mtype} module of name {args.mname} already exists')
+            sys.exit(1)
 
-            if args.mname in Dispatcher.get_choices('./modules/output/postmodules', 'MPostModule'):
+    elif args.mtype == 'premodule':
+        if not args.force and args.mname in Dispatcher.get_choices(
+            './modules/output/premodules', 'MPreModule'
+        ):
+            print(f'[!] Error: {args.mtype} module of name {args.mname} already exists')
+            sys.exit(1)
 
-                print(f'[!] Error: {args.mtype} module of name {args.mname} already exists')
-                sys.exit(1)
+    elif args.mtype == 'runners':
+        if not args.force and args.mname in Dispatcher.get_choices(
+            './modules/output/runners', 'MRunner'
+        ):
+            print(f'[!] Error: {args.mtype} module of name {args.mname} already exists')
+            sys.exit(1)
 
-        elif args.mtype == 'premodule':
+    elif args.mtype == 'crypter':
+        if not args.force and args.mname in Dispatcher.get_choices(
+            './modules/input/crypters', 'MCrypter'
+        ):
+            print(f'[!] Error: {args.mtype} module of name {args.mname} already exists')
+            sys.exit(1)
 
-            if args.mname in Dispatcher.get_choices('./modules/output/premodules', 'MPreModule'):
-
-                print(f'[!] Error: {args.mtype} module of name {args.mname} already exists')
-                sys.exit(1)
-
-        elif args.mtype == 'runners':
-
-            if args.mname in Dispatcher.get_choices('./modules/output/runners', 'MRunner'):
-
-                print(f'[!] Error: {args.mtype} module of name {args.mname} already exists')
-                sys.exit(1)
-
-        elif args.mtype == 'crypter':
-
-            if args.mname in Dispatcher.get_choices('./modules/input/crypters', 'MCrypter'):
-
-                print(f'[!] Error: {args.mtype} module of name {args.mname} already exists')
-                sys.exit(1)
-
-        elif args.mtype == 'ekey':
-
-            if args.mname in Dispatcher.get_choices('./modules/input/ekeys', 'MEKey'):
-
-                print(f'[!] Error: {args.mtype} module of name {args.mname} already exists')
-                sys.exit(1)
+    elif args.mtype == 'ekey':
+        if not args.force and args.mname in Dispatcher.get_choices(
+            './modules/input/ekeys', 'MEKey'
+        ):
+            print(f'[!] Error: {args.mtype} module of name {args.mname} already exists')
+            sys.exit(1)
 
     # ensure input files actually exist and are not directories
 
     if args.mtype in OMODULE_TYPES:
-    
+
         if not os.path.exists(args.source_file):
 
             print(f'[!] Error: source file {args.source_file} does not exist')
@@ -434,20 +430,18 @@ def sub_file_symbols(input_handle,
     base64_strs = {}
     output_lines = []
     for line in input_handle:
-    
-        if line.startswith('using'):
-    
-            if namespace_in_imports(line, imports):
-                continue
-    
+        
+        if line.startswith('using') and namespace_in_imports(line, imports):
+            continue
+
         for v in _vars:
             line = replace_symbols_in_line(v,
                                            base64_strs,
                                            '{{ v[\''+v+'\'] }}',
                                            line)
-    
+
         for v in methods:
-    
+
             if v == func_name:
                 line = replace_symbols_in_line(v,
                                                base64_strs,
@@ -458,9 +452,9 @@ def sub_file_symbols(input_handle,
                                               base64_strs,
                                               '{{ v[\''+v+'\'] }}',
                                               line)
-    
+
         for v in class_decls:
-    
+
             if v == class_name:
                 line = replace_symbols_in_line(v,
                                                base64_strs,
@@ -471,8 +465,8 @@ def sub_file_symbols(input_handle,
                                               base64_strs,
                                               '{{ v[\''+v+'\'] }}',
                                               line)
-    
-    
+
+
         for v in params:
             line = replace_symbols_in_line(v,
                                            base64_strs,
@@ -483,9 +477,9 @@ def sub_file_symbols(input_handle,
                                            base64_strs,
                                            '{{ v[\''+v+'\'] }}',
                                            line)
-    
+
         output_lines.append(line)
-    
+
     raw_output = ''.join(output_lines)
     for sub_val,b64_sub_val in base64_strs.items():
         raw_output = raw_output.replace(b64_sub_val, sub_val)
@@ -556,13 +550,13 @@ def create(args):
         output_cs_template_path = os.path.join(f'{mtype}s', f'{mname}.cs')
         input_py_template_path = os.path.join('module_maker', f'mm_{mtype}.py')
         output_py_template_path = f'modules/output/{mtype}s/{mname}.py'
-        
+
         if args.debug:
 
             print('output_cs_template_path :', output_cs_template_path)
             print('input_py_template_path :', input_py_template_path)
             print('output_py_template_path :', output_py_template_path)
-        
+
         env = Environment(loader=FileSystemLoader('templates'))
 
         template = env.get_template(input_py_template_path)
@@ -610,12 +604,12 @@ def create(args):
         # calculate template path
         input_py_template_path = os.path.join('module_maker', f'mm_{mtype}.py')
         output_py_template_path = f'modules/input/{mtype}s/{mname}.py'
-        
+
         if args.debug:
 
             print('input_py_template_path :', input_py_template_path)
             print('output_py_template_path :', output_py_template_path)
-        
+
         env = Environment(loader=FileSystemLoader('templates'))
 
         template = env.get_template(input_py_template_path)
@@ -625,7 +619,7 @@ def create(args):
                                description=mdescription,
                                compatible_interfaces=compatible_interfaces,
                                compatible_xmodules=compatible_xmodules)
-    
+
         with open(output_py_template_path, 'w') as output_handle:
             output_handle.write(rendered_template+'\n')
 
